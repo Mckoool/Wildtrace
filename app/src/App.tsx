@@ -38,6 +38,10 @@ function parseObservations(rows: Papa.ParseResult<Record<string, string>>) {
     observations.push({ eventId, timestamp, tagId, lat, lng })
   }
 
+    observations.sort((a, b) => {
+    return Date.parse(a.timestamp) - Date.parse(b.timestamp)
+  })
+
   return observations
 }
 
