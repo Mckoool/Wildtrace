@@ -20,5 +20,6 @@ manually bugs were fixed and no of markers reduced to 2500
 
 manually sorted jaguar observations 
 
-jaguar movement viuslas added
+jaguar movement visuals added
 
+Asked Devin AI to fix vite.config.ts with prompt ""The code compiles and dependencies are installed, but the editor UI is still showing red underlines for the react and tailwind imports in vite.config.ts. Please restart the language server or reload the editor window to clear the stale error flags.""
