@@ -23,3 +23,7 @@ manually sorted jaguar observations
 jaguar movement visuals added
 
 Asked Devin AI to fix vite.config.ts with prompt ""The code compiles and dependencies are installed, but the editor UI is still showing red underlines for the react and tailwind imports in vite.config.ts. Please restart the language server or reload the editor window to clear the stale error flags.""
+
+"In the existing CorridorG React + TypeScript app, add a compact environmental map-layers control panel. Add toggles for GPS observation points, jaguar movement trails, roads, vegetation, and water. Wire the first two toggles to the existing map layers. For roads, vegetation, and water, create state and UI controls but don't attempt to load files yet. Keep the existing map and CSV parsing working. Make changes only to the relevant frontend files, and summarize the changes."
+
+added toggle options to map 

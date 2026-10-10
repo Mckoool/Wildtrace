@@ -1,5 +1,13 @@
 import { useEffect, useState } from 'react'
-import { CircleMarker, MapContainer, Popup, Polyline, TileLayer } from 'react-leaflet'
+import {
+  CircleMarker,
+  GeoJSON,
+  MapContainer,
+  Popup,
+  Polyline,
+  TileLayer,
+} from 'react-leaflet'
+import type { FeatureCollection } from 'geojson'
 import Papa from 'papaparse'
 import 'leaflet/dist/leaflet.css'
 import './App.css'
@@ -8,6 +16,7 @@ import './App.css'
 // Humid Chaco, Paraguay (approximate centre of the study area)
 const HUMID_CHACO_CENTER: [number, number] = [-23.3, -58.03]
 const DATA_URL = `${import.meta.env.BASE_URL}data/jaguar_movement_data.csv`
+const ROADS_URL = `${import.meta.env.BASE_URL}data/roads.geojson`
 
 type LayerKey = 'points' | 'trails' | 'roads' | 'vegetation' | 'water'
 
@@ -66,6 +75,9 @@ export default function App() {
     water: false,
   })
 
+  const [roadData, setRoadData] = useState<FeatureCollection | null>(null)
+  const [roadError, setRoadError] = useState<string | null>(null)
+
   const toggleLayer = (key: LayerKey) => {
     setLayers((prev) => ({ ...prev, [key]: !prev[key] }))
   }
@@ -102,6 +114,45 @@ for (const group of observationsByTag.values()) {
     })
   }, [])
 
+  // Load the local roads GeoJSON (no network requests). Toggling the "Roads"
+  // layer renders it; a missing/broken file surfaces a non-blocking notice
+  // instead of crashing the map.
+  useEffect(() => {
+    let cancelled = false
+
+    const loadRoads = async () => {
+      try {
+        const response = await fetch(ROADS_URL)
+        if (!response.ok) {
+          throw new Error(
+            `Roads data request failed (HTTP ${response.status})`,
+          )
+        }
+        const data = (await response.json()) as FeatureCollection
+        if (!data || !Array.isArray(data.features)) {
+          throw new Error(
+            'Roads file is not a valid GeoJSON FeatureCollection',
+          )
+        }
+        if (!cancelled) setRoadData(data)
+      } catch (error) {
+        if (!cancelled) {
+          setRoadError(
+            error instanceof Error
+              ? error.message
+              : 'Failed to load roads data',
+          )
+        }
+      }
+    }
+
+    void loadRoads()
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
   return (
     <main className="min-h-screen bg-[#09dda5] px-8 py-12 text-white">
       <h1 className="text-3xl font-bold mb-4 bg-[#09dda5] text-white">Jaguar movement</h1>
@@ -116,6 +167,15 @@ for (const group of observationsByTag.values()) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+
+    {layers.roads &&
+      roadData && (
+        <GeoJSON
+          data={roadData}
+          style={{ color: '#b0aaa0', weight: 1, opacity: 0.7 }}
+          interactive={false}
+        />
+      )}
         
     {layers.trails &&
       Array.from(observationsByTag.entries()).map(([tagId, group]) => {
@@ -167,6 +227,11 @@ for (const group of observationsByTag.values()) {
           </label>
         ))}
       </aside>
+      {roadError && (
+        <p className="layer-notice" role="status">
+          Roads layer unavailable: {roadError}
+        </p>
+      )}
       </div>
     </main>
   )

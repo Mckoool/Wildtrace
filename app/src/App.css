@@ -233,3 +233,21 @@
   cursor: pointer;
   accent-color: var(--accent, #aa3bff);
 }
+
+/* Non-blocking notice shown when an environmental data file fails to load */
+.layer-notice {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 1000;
+  margin: 0;
+  padding: 6px 10px;
+  max-width: 340px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--text-h, #08060d);
+  background: var(--bg, #fff);
+  border: 1px solid var(--border, #e5e4e7);
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
