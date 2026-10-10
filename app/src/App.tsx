@@ -158,7 +158,7 @@ export default function App() {
         <main className="min-h-screen bg-[#09dda5] px-16 py-20" text-black>
             <h1 className="text-3xl font-bold mb-4">Jaguar movement</h1>
             <p className="text-lg mb-8 uppercase bg-[#4ffcce] text-white rounded-t-lg px-4 py-1">Total valid observations: {observations.length.toLocaleString()}</p>
-            <div className="w-full max-w-[1200px] aspect-[16/9] relative rounded-b-lg overflow-hidden shadow-lg">
+            <div className="w-full relative rounded-b-lg overflow-hidden shadow-lg">
                 <MapContainer
                     center={HUMID_CHACO_CENTER}
                     zoom={9}
