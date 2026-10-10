@@ -161,7 +161,7 @@ export default function App() {
                 <MapContainer
                     center={HUMID_CHACO_CENTER}
                     zoom={9}
-                    style={{height: "100%", width: "100%"}}
+                    style={{height: "430px", width: "980px"}}
                 >
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
