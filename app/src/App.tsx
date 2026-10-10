@@ -9,6 +9,16 @@ import './App.css'
 const HUMID_CHACO_CENTER: [number, number] = [-23.3, -58.03]
 const DATA_URL = `${import.meta.env.BASE_URL}data/jaguar_movement_data.csv`
 
+type LayerKey = 'points' | 'trails' | 'roads' | 'vegetation' | 'water'
+
+const LAYERS: { key: LayerKey; label: string }[] = [
+  { key: 'points', label: 'GPS observation points' },
+  { key: 'trails', label: 'Jaguar movement trails' },
+  { key: 'roads', label: 'Roads' },
+  { key: 'vegetation', label: 'Vegetation' },
+  { key: 'water', label: 'Water' },
+]
+
 interface Observation {
   eventId: string
   timestamp: string
@@ -48,6 +58,18 @@ function parseObservations(rows: Papa.ParseResult<Record<string, string>>) {
 
 function App() {
   const [observations, setObservations] = useState<Observation[]>([])
+
+  const [layers, setLayers] = useState<Record<LayerKey, boolean>>({
+    points: true,
+    trails: true,
+    roads: false,
+    vegetation: false,
+    water: false,
+  })
+
+  const toggleLayer = (key: LayerKey) => {
+    setLayers((prev) => ({ ...prev, [key]: !prev[key] }))
+  }
   
   const observationsByTag = new Map<string, Observation[]>()
 
@@ -85,6 +107,7 @@ for (const group of observationsByTag.values()) {
     <main>
       <h1>Jaguar movement — Humid Chaco, Paraguay</h1>
       <p>Total valid observations: {observations.length.toLocaleString()}</p>
+      <div className="map-wrap">
       <MapContainer
         center={HUMID_CHACO_CENTER}
         zoom={9}
@@ -95,7 +118,8 @@ for (const group of observationsByTag.values()) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
-    {Array.from(observationsByTag.entries()).map(([tagId, group]) => {
+    {layers.trails &&
+      Array.from(observationsByTag.entries()).map(([tagId, group]) => {
     const trailPoints = group
       .filter((_, index) => index % 10 === 0)
       .map((obs) => [obs.lat, obs.lng] as [number, number])
@@ -115,7 +139,8 @@ for (const group of observationsByTag.values()) {
    )
 })}
 
-        {displayObservations.map((obs) => (
+        {layers.points &&
+          displayObservations.map((obs) => (
           <CircleMarker
             key={obs.eventId}
             center={[obs.lat, obs.lng] as [number, number]}
@@ -130,6 +155,20 @@ for (const group of observationsByTag.values()) {
           </CircleMarker>
         ))}
       </MapContainer>
+      <aside className="layer-panel">
+        <span className="layer-panel__title">Layers</span>
+        {LAYERS.map((layer) => (
+          <label className="layer-row" key={layer.key}>
+            <input
+              type="checkbox"
+              checked={layers[layer.key]}
+              onChange={() => toggleLayer(layer.key)}
+            />
+            {layer.label}
+          </label>
+        ))}
+      </aside>
+      </div>
     </main>
   )
 }
