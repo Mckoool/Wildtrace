@@ -231,3 +231,137 @@ The application has progressed from an initial Leaflet map to a GPS-based jaguar
 - Placeholder state and UI controls for roads, vegetation and water.
 
 **Next step:** Load and integrate the road-network, vegetation and water datasets, then connect them to their existing toggles. Continue improving geographic coverage and test the application with larger datasets.
+
+15. Jaguar Movement Trails Completed
+
+Completed the jaguar movement-trail visualisation.
+
+Continued development of the map after implementing GPS observation markers and movement visuals.
+
+Prepared to integrate additional environmental datasets to complement the existing wildlife movement data.
+
+16. Environmental Data Integration Planning
+
+Established the next development stage as acquiring environmental datasets before implementing further map overlays.
+
+Prioritised road-network data first, followed by forest/vegetation and habitat-related data.
+
+Planned to integrate the environmental datasets with the existing map-layer toggle controls.
+
+Identified roads as the first environmental layer to acquire.
+
+17. Road-Network Data Acquisition Using Overpass Turbo
+
+Tool used: Overpass Turbo, querying OpenStreetMap data.
+
+Initial study-region bounding box:
+
+South: -24.5
+
+West: -59.5
+
+North: -22.0
+
+East: -57.0
+
+Work performed:
+
+Worked on obtaining road-network data for the Humid Chaco region of Paraguay.
+
+Used an Overpass Turbo query targeting a defined geographic bounding box.
+
+Followed the workflow of running the query and exporting the resulting road data as GeoJSON.
+
+Identified app/public/data/roads.geojson as the intended destination for the exported road dataset.
+
+Status: The road-data acquisition workflow was initiated. Successful completion and saving of the GeoJSON file have not been independently confirmed in the available development history.
+
+18. Geographic Coverage Expansion
+
+Problem identified:
+
+The initial road-data workflow covered only a small geographic region.
+
+A larger study area was needed to support the wider jaguar movement visualisation.
+
+Work performed:
+
+Investigated expanding road-data coverage beyond the initial region.
+
+Considered obtaining road data from several smaller geographic regions instead of relying on one large query.
+
+Explored the approach of processing smaller geographic tiles to reduce query failures and server timeouts.
+
+Encountered errors during attempts to expand the data-acquisition workflow.
+
+Outcome:
+
+Identified regional or tiled data acquisition as a possible approach for expanding coverage.
+
+Further work is required to confirm successful downloads, combine the resulting datasets, and validate their geographic coverage.
+
+19. Overpass Turbo Query and Server Troubleshooting
+
+Work performed:
+
+Attempted to run road-data queries for the selected geographic region.
+
+Investigated errors encountered during data retrieval.
+
+Worked through the limitations of requesting a larger geographic area in a single query.
+
+Considered splitting the study region into smaller areas to make data retrieval more manageable.
+
+Status: The road-data retrieval process still required further troubleshooting. A fully successful, expanded road-network export was not confirmed in the available record.
+
+20. Git Repository and File-Tracking Check
+
+Work performed:
+
+Inspected the development environment and questioned why certain files appeared greyed out in the editor.
+
+Investigated whether the appearance indicated that those files would be excluded from Git.
+
+Raised the question of whether the files would be included in the repository.
+
+Status: The exact Git tracking or ignore status of the files has not been established from the available record. This requires checking the repository's Git status and ignore rules before recording a definitive result.
+
+21. AI Assistance Record for This Development Stage
+
+AI-assisted guidance:
+
+Guidance on querying OpenStreetMap road data through Overpass Turbo.
+
+Guidance on exporting road data in GeoJSON format.
+
+Planning the expansion from a small geographic extract to a wider study region.
+
+Discussion of dividing large geographic queries into smaller tiles to reduce retrieval failures.
+
+Manual work and interaction:
+
+Worked through the road-data acquisition workflow.
+
+Attempted to retrieve data for the selected study region.
+
+Tested the data-retrieval process and encountered errors.
+
+Inspected the development environment and investigated file visibility and Git inclusion.
+
+Exact prompts: No new verbatim AI coding prompt was available for these data-acquisition steps. The work primarily involved tool usage, troubleshooting and implementation guidance. The exact Overpass query text and the final Git status remain to be verified.
+
+22. Updated Project Status
+
+Completed or previously implemented:
+
+Leaflet map centred on the Humid Chaco region of Paraguay.
+
+Jaguar GPS observation loading and visualisation.
+
+GPS marker popups.
+
+Marker-count optimisation and manual bug fixes.
+
+Jaguar movement visuals and trails.
+
+Environmental map-layer toggle controls for GPS points, movement trails, roads, vegetation and water.
