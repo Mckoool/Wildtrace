@@ -104,8 +104,8 @@ for (const group of observationsByTag.values()) {
 
   return (
     <main className="min-h-screen bg-[#09dda5] px-8 py-12 text-white">
-      <h1 className="text-3xl font-bold mb-4 bg-[#09dda5] text-white">Jaguar movement — Humid Chaco, Paraguay</h1>
-      <p className="text-lg mb-8">Total valid observations: {observations.length.toLocaleString()}</p>
+      <h1 className="text-3xl font-bold mb-4 bg-[#09dda5] text-white">Jaguar movement</h1>
+      <p className="text-lg mb-8 uppercase">Total valid observations: {observations.length.toLocaleString()}</p>
       <div className="map-wrap">
       <MapContainer
         center={HUMID_CHACO_CENTER}

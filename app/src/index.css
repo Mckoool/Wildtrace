@@ -111,3 +111,14 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.p1 {
+  font-size: 16px;
+  line-height: 135%;
+  color: var(--text);
+}
+
+body {
+  background: #09dda5;
+  font-family: 'Inter', sans-serif;
+}
