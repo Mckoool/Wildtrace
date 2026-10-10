@@ -12,7 +12,6 @@ import Papa from 'papaparse'
 import 'leaflet/dist/leaflet.css'
 import './App.css'
 
-
 // Humid Chaco, Paraguay (approximate centre of the study area)
 const HUMID_CHACO_CENTER: [number, number] = [-23.3, -58.03]
 const DATA_URL = `${import.meta.env.BASE_URL}data/jaguar_movement_data.csv`
@@ -158,7 +157,7 @@ export default function App() {
         <main className="min-h-screen bg-[#09dda5] px-16 py-20" text-black>
             <h1 className="text-3xl font-bold mb-4">Jaguar movement</h1>
             <p className="text-lg mb-8 uppercase bg-[#4ffcce] text-white rounded-t-lg px-4 py-1">Total valid observations: {observations.length.toLocaleString()}</p>
-            <div className="w-full relative rounded-b-lg overflow-hidden shadow-lg">
+            <div className="rounded-b-lg overflow-hidden shadow-lg">
                 <MapContainer
                     center={HUMID_CHACO_CENTER}
                     zoom={9}
