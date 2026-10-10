@@ -360,6 +360,8 @@ Jaguar GPS observation loading and visualisation.
 
 GPS marker popups.
 
+Updated UI to make it look sleeker and more polished for the the Final Build
+
 Marker-count optimisation and manual bug fixes.
 
 Jaguar movement visuals and trails.
