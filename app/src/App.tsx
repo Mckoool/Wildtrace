@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { CircleMarker, MapContainer, Popup, TileLayer } from 'react-leaflet'
+import { CircleMarker, MapContainer, Popup, Polyline, TileLayer } from 'react-leaflet'
 import Papa from 'papaparse'
 import 'leaflet/dist/leaflet.css'
 import './App.css'
+
 
 // Humid Chaco, Paraguay (approximate centre of the study area)
 const HUMID_CHACO_CENTER: [number, number] = [-23.3, -58.03]
@@ -48,6 +49,19 @@ function parseObservations(rows: Papa.ParseResult<Record<string, string>>) {
 function App() {
   const [observations, setObservations] = useState<Observation[]>([])
   
+  const observationsByTag = new Map<string, Observation[]>()
+
+  for (const obs of observations) {
+    const existing = observationsByTag.get(obs.tagId) ?? []
+    existing.push(obs)
+    observationsByTag.set(obs.tagId, existing)
+  }
+for (const group of observationsByTag.values()) {
+  group.sort(
+    (a, b) => Date.parse(a.timestamp) - Date.parse(b.timestamp)
+  )
+}
+
   const displayLimit = 2500
 
   const displayObservations =
@@ -80,6 +94,27 @@ function App() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        
+    {Array.from(observationsByTag.entries()).map(([tagId, group]) => {
+    const trailPoints = group
+      .filter((_, index) => index % 10 === 0)
+      .map((obs) => [obs.lat, obs.lng] as [number, number])
+
+    if (trailPoints.length < 2) return null
+
+    return (
+    <Polyline
+      key={tagId}
+      positions={trailPoints}
+      pathOptions={{
+        color: '#16866b',
+        weight: 2,
+        opacity: 0.65,
+      }}
+    />
+   )
+})}
+
         {displayObservations.map((obs) => (
           <CircleMarker
             key={obs.eventId}

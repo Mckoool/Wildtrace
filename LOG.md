@@ -18,3 +18,7 @@ added react and leaflet dependencies manually
 
 manually bugs were fixed and no of markers reduced to 2500
 
+manually sorted jaguar observations 
+
+jaguar movement viuslas added
+
